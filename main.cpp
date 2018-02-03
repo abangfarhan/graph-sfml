@@ -14,10 +14,10 @@ int main()
 
     int n_nodes = 4;
     Node* nodeList[n_nodes] = {
-        new Node("A", 10, 10),
-        new Node("B", 100, 150),
-        new Node("C", 30, 450),
-        new Node("D", 300, 150)
+        new Node(10, 10, "A"),
+        new Node(100, 150, "B"),
+        new Node(30, 450, "C"),
+        new Node(300, 150, "D")
     };
     nodeList[0]->addNeighbor(nodeList[1]);
     nodeList[0]->addNeighbor(nodeList[2]);

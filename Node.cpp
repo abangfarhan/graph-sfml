@@ -3,16 +3,11 @@
 #include <string>
 #include <math.h>
 
-Node::Node() { setName(""); setX(0); setY(0); }
-Node::Node(float x, float y) {
-    setName("");
+Node::Node() { setX(0); setY(0); setName(""); }
+Node::Node(float x, float y, std::string name = "") {
     setX(x);
     setY(y);
-}
-Node::Node(std::string name, float x, float y) {
     setName(name);
-    setX(x);
-    setY(y);
 }
 
 float Node::x() { return _x; }

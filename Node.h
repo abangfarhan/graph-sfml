@@ -8,8 +8,7 @@ class Node
 {
   public:
     Node();
-    Node(float x, float y);
-    Node(std::string name, float x, float y);
+    Node(float x, float y, std::string name);
     float x();
     float y();
     std::string name();
