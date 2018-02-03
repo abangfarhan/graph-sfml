@@ -12,15 +12,27 @@ int main()
     const int width = 800;
     const int height = 600;
 
-    int n_nodes = 3;
-    Node n1("A", 10, 10);
-    Node n2("B", 100, 150);
-    Node n3("C", 30, 450);
-    n1.addNeighbor(&n2);
-    n1.addNeighbor(&n2);
-    n1.addNeighbor(&n3);
-    n2.addNeighbor(&n3);
-    Node* nodeList[n_nodes] = {&n1, &n2, &n3};
+    int n_nodes = 4;
+    Node* nodeList[n_nodes] = {
+        new Node("A", 10, 10),
+        new Node("B", 100, 150),
+        new Node("C", 30, 450),
+        new Node("D", 300, 150)
+    };
+    nodeList[0]->addNeighbor(nodeList[1]);
+    nodeList[0]->addNeighbor(nodeList[2]);
+    nodeList[1]->addNeighbor(nodeList[2]);
+    nodeList[3]->addNeighbor(nodeList[0]);
+    nodeList[3]->addNeighbor(nodeList[2]);
+    // print nodes info
+    for (int i = 0; i < n_nodes; i++)
+    {
+        std::cout << "Node " << nodeList[i] << std::endl;
+        std::cout << "  Coordinate: (" << nodeList[i]->x() << ", " << nodeList[i]->y() << ")" << std::endl;
+        std::cout << "  Neighbors: " << std::endl;
+        for (Node* neighbor: nodeList[i]->neighbors())
+            std::cout << "  - " << neighbor << std::endl;
+    }
 
     sf::CircleShape nodeCircles[n_nodes];
     for (int i = 0; i < n_nodes; ++i)
@@ -29,18 +41,6 @@ int main()
         nodeCircles[i].setPosition(sf::Vector2f(nodeList[i]->x() - 10, nodeList[i]->y() - 10));
         nodeCircles[i].setFillColor(sf::Color(0, 0, 0, 30));
     }
-    // Node nodes[3] = {n1, n2, n3};
-    // for (int i = 0; i < 3; ++i)
-    // {
-    //     std::cout << "Node " << nodes[i].name() << std::endl;
-    //     std::cout << "  x = " << nodes[i].x() << std::endl;
-    //     std::cout << "  y = " << nodes[i].y() << std::endl;
-    //     std::cout << "  Neighbors " << std::endl;
-    //     for (Node* node: nodes[i].neighbors())
-    //     {
-    //         std::cout << "    " << node->name() << std::endl;
-    //     }
-    // }
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Graph");
     while (window.isOpen())
