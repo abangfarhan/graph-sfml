@@ -31,7 +31,7 @@ int main()
         std::cout << "  Coordinate: (" << nodeList[i]->x() << ", " << nodeList[i]->y() << ")" << std::endl;
         std::cout << "  Neighbors: " << std::endl;
         for (Node* neighbor: nodeList[i]->neighbors())
-            std::cout << "  - " << neighbor << std::endl;
+            std::cout << "  - " << neighbor << " - Distance: " << nodeList[i]->distance(neighbor) << std::endl;
     }
 
     sf::CircleShape nodeCircles[n_nodes];

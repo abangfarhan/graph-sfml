@@ -1,4 +1,7 @@
 #include "Node.h"
+#include <vector>
+#include <string>
+#include <math.h>
 
 Node::Node() { setName(""); setX(0); setY(0); }
 Node::Node(float x, float y) {
@@ -29,3 +32,8 @@ void Node::addNeighbor(Node* node)
 }
 
 std::vector<Node*> Node::neighbors() { return _neighbors; }
+
+float Node::distance(Node* neighbor)
+{
+    return sqrt(pow(_x - neighbor->x(), 2) + pow(_y - neighbor->y(), 2));
+}

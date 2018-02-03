@@ -18,6 +18,7 @@ class Node
     void setName(std::string name);
     void addNeighbor(Node* node);
     std::vector<Node*> neighbors();
+    float distance(Node* neighbor);
   private:
     float _x;
     float _y;
