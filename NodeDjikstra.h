@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 
+#define large_number 99999
+
 class NodeDj: public Node {
   public:
     NodeDj(float x, float y, std::string name = ""): Node(x, y, name) {}
@@ -14,7 +16,7 @@ class NodeDj: public Node {
     std::vector<NodeDj*> neighbors();
     void addNeighbor(NodeDj* node);
   private:
-    float _tnDist = 99999;
+    float _tnDist = large_number;
     bool _visited = false;
     NodeDj* _prev = NULL;
     std::vector<NodeDj*> _neighbors;

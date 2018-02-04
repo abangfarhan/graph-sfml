@@ -9,10 +9,12 @@ void showPath(NodeDj* dest);
 
 int main()
 {
+    const bool complete_traversal = true;
+
     const int width = 800;
     const int height = 600;
 
-    int n_nodes = 10;
+    int n_nodes = 30;
     NodeDj* nodeList[n_nodes];
     fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, 5);
 
@@ -24,15 +26,15 @@ int main()
 
     // mark beginning and ending node
     int radius = 5;
-    sf::CircleShape startCircle;
-    startCircle.setPosition(start->x() - radius, start->y() - radius);
-    startCircle.setRadius(radius);
-    startCircle.setFillColor(sf::Color::Red);
+    sf::CircleShape startMarker;
+    startMarker.setPosition(start->x() - radius, start->y() - radius);
+    startMarker.setRadius(radius);
+    startMarker.setFillColor(sf::Color::Blue);
 
-    sf::CircleShape endCircle;
-    endCircle.setPosition(dest->x() - radius, dest->y() - radius);
-    endCircle.setRadius(radius);
-    endCircle.setFillColor(sf::Color::Red);
+    sf::CircleShape endMarker;
+    endMarker.setPosition(dest->x() - radius, dest->y() - radius);
+    endMarker.setRadius(radius);
+    endMarker.setFillColor(sf::Color::Red);
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Djikstra");
     while (window.isOpen())
@@ -47,17 +49,22 @@ int main()
         }
 
         window.clear(sf::Color::White);
+
+        // line connecting all nodes
         for (int i = 0; i < n_nodes; ++i)
         {
-            // line connecting all nodes
             for (NodeDj* neighbor: nodeList[i]->neighbors())
             {
                 sf::RectangleShape line = Line(nodeList[i]->x(), nodeList[i]->y(), neighbor->x(), neighbor->y());
-                line.setFillColor(sf::Color(200, 200, 200));
+                line.setFillColor(sf::Color(220, 220, 220));
                 window.draw(line);
             }
+        }
 
-            // line connecting visited nodes
+        // Line connecting visited nodes
+        // Why separate loop with the above? To avoid lines overlapping.
+        for (int i = 0; i < n_nodes; ++i)
+        {
             if (nodeList[i]->prev() != NULL)
             {
                 NodeDj* prev = nodeList[i]->prev();
@@ -69,7 +76,6 @@ int main()
 
         if (is_solving)
         {
-            NodeDj* closestNeighbor = NULL;
             for (NodeDj* neighbor: current->neighbors())
             {
                 if (neighbor->visited()) continue;
@@ -80,26 +86,32 @@ int main()
                     neighbor->setTnDist(newNeighborTentativeDist);
                     neighbor->setPrev(current);
                 }
-                if (closestNeighbor == NULL || neighbor->tnDist() < closestNeighbor->tnDist())
-                    closestNeighbor = neighbor;
             }
             current->setVisited(true);
-            current = closestNeighbor;
 
-            // if destination has been marked 'visited', or facing a dead-end
-            // if (dest->visited() || current == NULL)
-            if (current == NULL)
-                is_solving = false;
-        }
-        else
-        {
-            bool all_connected = true;
-            for (int i = 1; i < n_nodes; ++i)
+            // find unvisited nodes with the smallest tnDist
+            NodeDj* closestNode = NULL;
+            for (int i = 0; i < n_nodes; ++i)
             {
-                if (nodeList[i]->prev() == NULL)
-                    all_connected = false;
+                if (nodeList[i]->visited()) continue;
+                if (closestNode == NULL || nodeList[i]->tnDist() < closestNode->tnDist())
+                    closestNode = nodeList[i];
             }
-            if (!all_connected) graphInfo(nodeList, n_nodes);
+            current = closestNode;
+
+            if (complete_traversal && (closestNode == NULL || closestNode->tnDist() == large_number))
+            {
+                is_solving = false;
+                if (closestNode == NULL)
+                    std::cout << "Shortest path to every node discovered!" << std::endl;
+                else
+                    std::cout << "Found no way to visit unvisited nodes" << std::endl;
+            }
+            else if (dest->visited())
+            {
+                is_solving = false;
+                std::cout << "Shortest path to destination discovered!" << std::endl;
+            }
         }
 
         if (dest->prev() != NULL)
@@ -116,8 +128,8 @@ int main()
             }
         }
 
-        window.draw(startCircle);
-        window.draw(endCircle);
+        window.draw(startMarker);
+        window.draw(endMarker);
         window.display();
         sf::sleep(sf::milliseconds(100));
     }
