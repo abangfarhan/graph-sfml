@@ -10,6 +10,14 @@ Node::Node(float x, float y, std::string name = "") {
     setName(name);
 }
 
+Node::Node(Node* node)
+{
+    /* copy properties, except the neighbors */
+    setX(node->x());
+    setY(node->y());
+    setName(node->name());
+}
+
 float Node::x() { return _x; }
 float Node::y() { return _y; }
 std::string Node::name() { return _name; }
