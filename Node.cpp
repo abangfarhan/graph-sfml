@@ -4,7 +4,7 @@
 #include <math.h>
 
 Node::Node() { setX(0); setY(0); setName(""); }
-Node::Node(float x, float y, std::string name = "") {
+Node::Node(float x, float y, std::string name) {
     setX(x);
     setY(y);
     setName(name);
