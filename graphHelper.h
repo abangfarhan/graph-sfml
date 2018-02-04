@@ -1,3 +1,6 @@
+#include <math.h>
+#include <time.h>
+
 #define PI 3.14159265
 
 template <class anyNode>
@@ -42,7 +45,7 @@ void graphInfo(anyNode* nodeList[], int n_nodes)
     }
 }
 
-sf::RectangleShape Line(float x1, float y1, float x2, float y2, int thickness = 1)
+sf::RectangleShape Line(float x1, float y1, float x2, float y2, float thickness = 1)
 {
     sf::RectangleShape line;
     float len, angle;
