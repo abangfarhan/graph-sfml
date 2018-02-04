@@ -1,22 +1,25 @@
 #include <iostream>
-#include "NodeDjikstra.h"
+#include <sstream>
 #include <SFML/Graphics.hpp>
+#include "NodeDjikstra.h"
 #include "graphHelper.h"
 
-#define PI 3.14159265
-
-void showPath(NodeDj* dest);
-
-int main()
+int main(int argc, char* argv[])
 {
-    const bool complete_traversal = true;
+    bool complete_traversal = true;
 
     const int width = 800;
     const int height = 600;
 
     int n_nodes = 30;
+    if (argc == 2)
+    {
+        std::stringstream ss;
+        ss << argv[1];
+        ss >> n_nodes;
+    }
     NodeDj* nodeList[n_nodes];
-    fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, 5);
+    fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, std::min(3, n_nodes));
 
     bool is_solving = true;
     NodeDj* start = nodeList[0];
@@ -25,7 +28,7 @@ int main()
     start->setTnDist(0);
 
     // mark beginning and ending node
-    int radius = 5;
+    const int radius = 5;
     sf::CircleShape startMarker;
     startMarker.setPosition(start->x() - radius, start->y() - radius);
     startMarker.setRadius(radius);
@@ -107,7 +110,7 @@ int main()
                 else
                     std::cout << "Found no way to visit unvisited nodes" << std::endl;
             }
-            else if (dest->visited())
+            else if (!complete_traversal && dest->visited())
             {
                 is_solving = false;
                 std::cout << "Shortest path to destination discovered!" << std::endl;
@@ -133,18 +136,4 @@ int main()
         window.display();
         sf::sleep(sf::milliseconds(100));
     }
-}
-
-void showPath(NodeDj* dest)
-{
-    /* Utility function to trace the node path.
-     * Use a recursive implementation.
-     */
-    if (dest == NULL)
-    {
-        std::cout << "START" << std::endl;
-        return;
-    }
-    std::cout << dest->name() << " <- ";
-    showPath(dest->prev());
 }
