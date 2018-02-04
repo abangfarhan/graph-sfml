@@ -22,3 +22,12 @@ main.o: main.cpp Node.h
 
 Node.o: Node.cpp Node.h
 	$(CXX) $(CXXFLAGS) -c Node.cpp
+
+shortest-path-djikstra: shortest-path-djikstra.o NodeDjikstra.o Node.o
+	$(CXX) $(CXXFLAGS) -o shortest-path-djikstra $?
+
+NodeDjikstra.o: NodeDjikstra.cpp NodeDjikstra.h
+	$(CXX) $(CXXFLAGS) -c NodeDjikstra.cpp
+
+shortest-path-djikstra.o: shortest-path-djikstra.cpp NodeDjikstra.h
+	$(CXX) $(CXXFLAGS) -c shortest-path-djikstra.cpp
