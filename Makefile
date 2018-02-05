@@ -21,10 +21,10 @@ build/main.o: src/main.cpp include/Node.h include/graphHelper.h
 build/Node.o: src/Node.cpp include/Node.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $< $(INC)
 
-bin/shortest-path-djikstra: build/shortest-path-djikstra.o build/NodeDjikstra.o build/Node.o
+bin/sp-djikstra: build/sp-djikstra.o build/NodeDjikstra.o build/Node.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(SFML_LIB)
 
-build/shortest-path-djikstra.o: src/shortest-path-djikstra.cpp include/NodeDjikstra.h include/graphHelper.h
+build/sp-djikstra.o: src/sp-djikstra.cpp include/NodeDjikstra.h include/graphHelper.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $< $(INC) $(SFML_INCLUDE)
 
 build/NodeDjikstra.o: src/NodeDjikstra.cpp include/NodeDjikstra.h
