@@ -117,6 +117,7 @@ int main(int argc, char* argv[])
             }
         }
 
+        // Line from destination to the start
         if (dest->prev() != NULL)
         {
             NodeDj* node = dest;
