@@ -28,16 +28,20 @@ int main(int argc, char* argv[])
     start->setTnDist(0);
 
     // mark beginning and ending node
-    const int radius = 5;
-    sf::CircleShape startMarker;
-    startMarker.setPosition(start->x() - radius, start->y() - radius);
-    startMarker.setRadius(radius);
-    startMarker.setFillColor(sf::Color::Blue);
-
-    sf::CircleShape endMarker;
-    endMarker.setPosition(dest->x() - radius, dest->y() - radius);
-    endMarker.setRadius(radius);
-    endMarker.setFillColor(sf::Color::Red);
+    const int radius = 3;
+    sf::CircleShape nodeMarkers[n_nodes];
+    for (int i = 0; i < n_nodes; ++i)
+    {
+        sf::CircleShape marker;
+        marker.setPosition(nodeList[i]->x() - radius, nodeList[i]->y() - radius);
+        marker.setRadius(radius);
+        marker.setFillColor(sf::Color::Black);
+        if (nodeList[i] == start) 
+            marker.setFillColor(sf::Color::Blue);
+        else if (nodeList[i] == dest) 
+            marker.setFillColor(sf::Color::Red);
+        nodeMarkers[i] = marker;
+    }
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 5;
@@ -134,8 +138,10 @@ int main(int argc, char* argv[])
             }
         }
 
-        window.draw(startMarker);
-        window.draw(endMarker);
+        // Markers for each node. We want this to be on top of all other drawings.
+        for (int i = 0; i < n_nodes; ++i)
+            window.draw(nodeMarkers[i]);
+
         window.display();
         sf::sleep(sf::milliseconds(100));
     }
