@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = --std=c++11 -g
+CXXFLAGS = --std=c++11 -g -Wall
+INC = -I ./include/
 SFML_INCLUDE = -DSFML_STATIC -I "D:/Program Files (x86)/SFML/include"
 SFML_LIB = -L "D:/Program Files (x86)/SFML/lib" \
 	-l sfml-graphics-s-d \
@@ -14,20 +15,23 @@ SFML_LIB = -L "D:/Program Files (x86)/SFML/lib" \
 # %: %.cpp
 # 	$(CXX) $(CXXFLAGS) -o $@ $< $(SFML)
 
-main: main.o Node.o
-	$(CXX) $(CXXFLAGS) -o main main.o Node.o $(SFML_LIB)
+bin/main: build/main.o build/Node.o
+	$(CXX) $(CXXFLAGS) -o bin/main build/main.o build/Node.o $(SFML_LIB)
 
-main.o: main.cpp Node.h graphHelper.h
-	$(CXX) $(CXXFLAGS) -c main.cpp $(SFML_INCLUDE)
+build/main.o: src/main.cpp include/Node.h include/graphHelper.h
+	$(CXX) $(CXXFLAGS) -o build/main.o -c src/main.cpp $(INC) $(SFML_INCLUDE)
 
-Node.o: Node.cpp Node.h
-	$(CXX) $(CXXFLAGS) -c Node.cpp
+build/Node.o: src/Node.cpp include/Node.h
+	$(CXX) $(CXXFLAGS) -o build/Node.o -c src/Node.cpp $(INC)
 
-shortest-path-djikstra: shortest-path-djikstra.o NodeDjikstra.o Node.o
-	$(CXX) $(CXXFLAGS) -o shortest-path-djikstra shortest-path-djikstra.o NodeDjikstra.o Node.o $(SFML_LIB)
+bin/shortest-path-djikstra: build/shortest-path-djikstra.o build/NodeDjikstra.o build/Node.o
+	$(CXX) $(CXXFLAGS) -o bin/shortest-path-djikstra build/shortest-path-djikstra.o build/NodeDjikstra.o build/Node.o $(SFML_LIB)
 
-NodeDjikstra.o: NodeDjikstra.cpp NodeDjikstra.h
-	$(CXX) $(CXXFLAGS) -c NodeDjikstra.cpp
+build/shortest-path-djikstra.o: src/shortest-path-djikstra.cpp include/NodeDjikstra.h include/graphHelper.h
+	$(CXX) $(CXXFLAGS) -o build/shortest-path-djikstra.o -c src/shortest-path-djikstra.cpp $(INC) $(SFML_INCLUDE)
 
-shortest-path-djikstra.o: shortest-path-djikstra.cpp NodeDjikstra.h graphHelper.h
-	$(CXX) $(CXXFLAGS) -c shortest-path-djikstra.cpp $(SFML_INCLUDE)
+build/NodeDjikstra.o: src/NodeDjikstra.cpp include/NodeDjikstra.h
+	$(CXX) $(CXXFLAGS) -o build/NodeDjikstra.o -c src/NodeDjikstra.cpp $(INC)
+
+clean:
+	rm build/*.*

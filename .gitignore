@@ -1,5 +1,5 @@
-*.exe
-*.o
+build/*
+bin/*
 tags
 test.*
 *.swp
