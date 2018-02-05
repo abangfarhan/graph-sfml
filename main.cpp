@@ -22,7 +22,9 @@ int main()
         nodeCircles[i].setFillColor(sf::Color(0, 0, 0, 30));
     }
 
-    sf::RenderWindow window(sf::VideoMode(width, height), "Graph");
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Graph", sf::Style::Default, settings);
     while (window.isOpen())
     {
         sf::Event event;

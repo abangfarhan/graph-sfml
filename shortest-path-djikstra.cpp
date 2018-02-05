@@ -39,7 +39,9 @@ int main(int argc, char* argv[])
     endMarker.setRadius(radius);
     endMarker.setFillColor(sf::Color::Red);
 
-    sf::RenderWindow window(sf::VideoMode(width, height), "Djikstra");
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 5;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Djikstra", sf::Style::Default, settings);
     while (window.isOpen())
     {
         sf::Event event;
