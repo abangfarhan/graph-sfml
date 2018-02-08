@@ -30,5 +30,11 @@ build/sp-djikstra.o: src/sp-djikstra.cpp include/NodeDjikstra.h include/graphHel
 build/NodeDjikstra.o: src/NodeDjikstra.cpp include/NodeDjikstra.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $< $(INC)
 
+bin/st-prim: build/st-prim.o build/NodeDjikstra.o build/Node.o
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(SFML_LIB)
+
+build/st-prim.o: src/st-prim.cpp include/NodeDjikstra.h include/graphHelper.h
+	$(CXX) $(CXXFLAGS) -o $@ -c $< $(INC) $(SFML_INCLUDE)
+
 clean:
 	rm build/*.*

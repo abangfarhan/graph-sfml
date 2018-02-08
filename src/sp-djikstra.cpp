@@ -21,6 +21,27 @@ int main(int argc, char* argv[])
     NodeDj* nodeList[n_nodes];
     fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, std::min(3, n_nodes));
 
+    // experimental
+    // int spacing = 50;
+    // int n_nodes_width = width/spacing;
+    // int n_nodes_height = height/spacing;
+    // int n_nodes = n_nodes_width * n_nodes_height;
+    // NodeDj* nodeList[n_nodes];
+    // for (int i = 0; i < n_nodes_width; ++i)
+    //     for (int j = 0; j < n_nodes_height; ++j)
+    //         nodeList[i + j * n_nodes_width] = new NodeDj(spacing/2 + i * spacing, spacing/2 + j * spacing);
+
+    // for (int i = 0; i < n_nodes_width; ++i)
+    //     for (int j = 0; j < n_nodes_height; ++j)
+    //     {
+    //         if (i > 0)
+    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i-1 + j * n_nodes_width]);
+    //         if (j > 0)
+    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i + (j-1) * n_nodes_width]);
+    //         if (i > 0 && j > 0)
+    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i-1 + (j-1) * n_nodes_width]);
+    //     }
+
     bool is_solving = true;
     NodeDj* start = nodeList[0];
     NodeDj* dest = nodeList[n_nodes - 1];
