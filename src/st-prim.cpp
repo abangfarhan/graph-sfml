@@ -89,7 +89,7 @@ int main()
             closestNeighbor->setPrev(chosenNode);
             visitedNodes.push_back(closestNeighbor);
 
-            if (visitedNodes.size() == n_nodes - 1)
+            if (visitedNodes.size() == n_nodes)
                 std::cout << "Minimum spanning tree discovered" << std::endl;
         }
 
