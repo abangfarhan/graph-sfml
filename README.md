@@ -14,3 +14,7 @@ In the near future, I will use this program to implement algorithms related with
 ## Shortest Path Algorithms
 
 I have implemented one shortest path algorithm, the [Djikstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm). In `NodeDjikstra.cpp` and `NodeDjikstra.h` I created a class `NodeDj` that inherited the original `Node` class. This class enable the graph to be solvable using Djikstra's algorithm, such as the method to get the previous node, or the method to tell whether the node has been "visited" or not. The program will highlight lines that have been visited by the algorithm, and show the path from that node to the source (`start`) node. A green line indicates the path from the source node to the target (`dest`) node. By default the program will attempt to make a complete traversal (find shortest path for each node). But changing the variable `complete_traversal` to `false` will make the program only attempt to find the shortest find between the source node to the target node.
+
+## Minimum Spanning Tree Algorithm
+
+I have also implemented one minimum spanning tree (MST) algorithm, the Prim's algorithm based on the explanation on [this Wikipedia page](https://en.wikipedia.org/wiki/Prim%27s_algorithm). For the moment I used the `NodeDj` class to implement this algorithm, because it suffice to do it. But later I will consider how to improve this, because I think it will be confusing to use a class that implies Djikstra's algorithm on another algorithm.
