@@ -1,20 +1,32 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "NodeDjikstra.h"
 #include "graphHelper.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    const int width = 800;
-    const int height = 600;
-
-    int n_nodes = 30;
+    int gridWidth = 20;
+    int gridHeight = 10;
+    if (argc == 3)
+    {
+        std::stringstream ss;
+        ss << argv[1];
+        ss >> gridWidth;
+        ss << argv[2];
+        ss >> gridHeight;
+    }
+    const int n_nodes = gridWidth * gridHeight;
+    const int space = 50;
+    const int screenWidth = gridWidth * space;
+    const int screenHeight = gridHeight * space;
     NodeDj* nodeList[n_nodes];
-    fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, std::min(3, n_nodes));
+    fillGraphGrid<NodeDj>(nodeList, space, gridWidth, gridHeight);
     std::vector<NodeDj*> visitedNodes;
 
-    NodeDj* start = nodeList[0];
+    bool is_solving = true;
+    NodeDj* start = nodeList[gridWidth/2 + (gridHeight/2) * gridWidth];
     start->setVisited(true);
     visitedNodes.push_back(start);
 
@@ -33,7 +45,7 @@ int main()
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 5;
-    sf::RenderWindow window(sf::VideoMode(width, height), "Djikstra", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Prim's Algorithm", sf::Style::Default, settings);
     while (window.isOpen())
     {
         sf::Event event;
@@ -64,12 +76,12 @@ int main()
             {
                 NodeDj* prev = nodeList[i]->prev();
                 sf::RectangleShape line = Line(nodeList[i]->x(), nodeList[i]->y(), prev->x(), prev->y(), 2);
-                line.setFillColor(sf::Color(100, 100, 100));
+                line.setFillColor(sf::Color::Black);
                 window.draw(line);
             }
         }
 
-        if (visitedNodes.size() < n_nodes)
+        if (is_solving)
         {
             NodeDj* chosenNode = NULL;
             NodeDj* closestNeighbor = NULL;
@@ -85,18 +97,29 @@ int main()
                     }
                 }
             }
-            closestNeighbor->setVisited(true);
-            closestNeighbor->setPrev(chosenNode);
-            visitedNodes.push_back(closestNeighbor);
+            if (chosenNode != NULL && closestNeighbor != NULL)
+            {
+                closestNeighbor->setVisited(true);
+                closestNeighbor->setPrev(chosenNode);
+                visitedNodes.push_back(closestNeighbor);
+            }
+            else
+            {
+                is_solving = false;
+                std::cout << "Some nodes are not reachable" << std::endl;
+            }
 
             if (visitedNodes.size() == n_nodes)
+            {
+                is_solving = false;
                 std::cout << "Minimum spanning tree discovered" << std::endl;
+            }
         }
 
         for (int i = 0; i < n_nodes; ++i)
             window.draw(nodeMarkers[i]);
 
         window.display();
-        sf::sleep(sf::milliseconds(100));
+        // sf::sleep(sf::milliseconds(100));
     }
 }
