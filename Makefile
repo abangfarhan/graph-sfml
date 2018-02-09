@@ -12,10 +12,10 @@ SFML_LIB := -L "D:/Program Files (x86)/SFML/lib" \
 	-l freetype \
 	-l jpeg \
 
-bin/main: build/main.o build/Node.o
+bin/base: build/base.o build/Node.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(SFML_LIB)
 
-build/main.o: src/main.cpp include/Node.h include/graphHelper.h
+build/base.o: src/base.cpp include/Node.h include/graphHelper.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $< $(INC) $(SFML_INCLUDE)
 
 build/Node.o: src/Node.cpp include/Node.h
