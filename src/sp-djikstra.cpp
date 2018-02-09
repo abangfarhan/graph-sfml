@@ -7,40 +7,22 @@
 int main(int argc, char* argv[])
 {
     bool complete_traversal = true;
-
-    const int width = 800;
-    const int height = 600;
-
-    int n_nodes = 30;
-    if (argc == 2)
+    int gridWidth = 20;
+    int gridHeight = 10;
+    if (argc == 3)
     {
         std::stringstream ss;
         ss << argv[1];
-        ss >> n_nodes;
+        ss >> gridWidth;
+        ss << argv[2];
+        ss >> gridHeight;
     }
+    const int space = 50;
+    const int screenWidth = gridWidth * space;
+    const int screenHeight = gridHeight * space;
+    const int n_nodes = gridWidth * gridHeight;
     NodeDj* nodeList[n_nodes];
-    fillGraph<NodeDj>(nodeList, n_nodes, width, height, 1, std::min(3, n_nodes));
-
-    // experimental
-    // int spacing = 50;
-    // int n_nodes_width = width/spacing;
-    // int n_nodes_height = height/spacing;
-    // int n_nodes = n_nodes_width * n_nodes_height;
-    // NodeDj* nodeList[n_nodes];
-    // for (int i = 0; i < n_nodes_width; ++i)
-    //     for (int j = 0; j < n_nodes_height; ++j)
-    //         nodeList[i + j * n_nodes_width] = new NodeDj(spacing/2 + i * spacing, spacing/2 + j * spacing);
-
-    // for (int i = 0; i < n_nodes_width; ++i)
-    //     for (int j = 0; j < n_nodes_height; ++j)
-    //     {
-    //         if (i > 0)
-    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i-1 + j * n_nodes_width]);
-    //         if (j > 0)
-    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i + (j-1) * n_nodes_width]);
-    //         if (i > 0 && j > 0)
-    //             nodeList[i + j * n_nodes_width]->addNeighbor(nodeList[i-1 + (j-1) * n_nodes_width]);
-    //     }
+    fillGraphGrid<NodeDj>(nodeList, space, gridWidth, gridHeight);
 
     bool is_solving = true;
     NodeDj* start = nodeList[0];
@@ -66,7 +48,7 @@ int main(int argc, char* argv[])
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 5;
-    sf::RenderWindow window(sf::VideoMode(width, height), "Djikstra", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Djikstra", sf::Style::Default, settings);
     while (window.isOpen())
     {
         sf::Event event;
@@ -99,7 +81,7 @@ int main(int argc, char* argv[])
             {
                 NodeDj* prev = nodeList[i]->prev();
                 sf::RectangleShape line = Line(nodeList[i]->x(), nodeList[i]->y(), prev->x(), prev->y(), 2);
-                line.setFillColor(sf::Color(100, 100, 100));
+                line.setFillColor(sf::Color::Black);
                 window.draw(line);
             }
         }
@@ -164,6 +146,6 @@ int main(int argc, char* argv[])
             window.draw(nodeMarkers[i]);
 
         window.display();
-        sf::sleep(sf::milliseconds(100));
+        sf::sleep(sf::milliseconds(50));
     }
 }

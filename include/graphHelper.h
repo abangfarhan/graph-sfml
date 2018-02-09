@@ -33,6 +33,45 @@ void fillGraph(anyNode* nodeList[], int n_nodes, int max_x, int max_y, int min_n
 }
 
 template <class anyNode>
+void fillGraphGrid(anyNode* nodeList[], int space, int gridWidth, int gridHeight)
+{
+    srand(time(NULL));
+
+    for (int i = 0; i < gridWidth; ++i)
+        for (int j = 0; j < gridHeight; ++j)
+        {
+            // add space/2 for padding
+            int x = space/2 + (i * space);
+            int y = space/2 + (j * space);
+            nodeList[i + j * gridWidth] = new anyNode(x, y);
+        }
+
+    for (int i = 0; i < gridWidth; ++i)
+        for (int j = 0; j < gridHeight; ++j)
+        {
+            float rnd;
+            if (i > 0)
+            {
+                rnd = float(rand()) / RAND_MAX;
+                if (rnd < 0.70)
+                    nodeList[i + j * gridWidth]->addNeighbor(nodeList[i-1 + j * gridWidth]);
+            }
+            if (j > 0)
+            {
+                rnd = float(rand()) / RAND_MAX;
+                if (rnd < 0.70)
+                    nodeList[i + j * gridWidth]->addNeighbor(nodeList[i + (j-1) * gridWidth]);
+            }
+            if (i > 0 && j > 0)
+            {
+                rnd = float(rand()) / RAND_MAX;
+                if (rnd < 0.60)
+                    nodeList[i + j * gridWidth]->addNeighbor(nodeList[i-1 + (j-1) * gridWidth]);
+            }
+        }
+}
+
+template <class anyNode>
 void graphInfo(anyNode* nodeList[], int n_nodes)
 {
     for (int i = 0; i < n_nodes; ++i)
