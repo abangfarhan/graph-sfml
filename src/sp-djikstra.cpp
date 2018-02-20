@@ -146,6 +146,6 @@ int main(int argc, char* argv[])
             window.draw(nodeMarkers[i]);
 
         window.display();
-        sf::sleep(sf::milliseconds(50));
+        // sf::sleep(sf::milliseconds(50));
     }
 }
