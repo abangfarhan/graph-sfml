@@ -1,3 +1,7 @@
+#include <vector>
+#include <string>
+
+#include "Node.h"
 #include "NodeDjikstra.h"
 
 float NodeDj::tnDist() { return _tnDist; }

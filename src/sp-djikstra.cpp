@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
+
+#include "Node.h"
 #include "NodeDjikstra.h"
 #include "graphHelper.h"
 

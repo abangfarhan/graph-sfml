@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "Node.h"
 #include "graphHelper.h"
 

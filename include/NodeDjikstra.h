@@ -1,12 +1,9 @@
-#include "Node.h"
-#include <vector>
-#include <string>
-
 #define large_number 99999
 
 class NodeDj: public Node {
   public:
     NodeDj(float x, float y, std::string name = ""): Node(x, y, name) {}
+    // tn is short for tentative
     float tnDist();
     void setTnDist(float newTnDist);
     bool visited();

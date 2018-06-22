@@ -1,7 +1,8 @@
-#include "Node.h"
 #include <vector>
 #include <string>
 #include <math.h>
+
+#include "Node.h"
 
 Node::Node() { setX(0); setY(0); setName(""); }
 Node::Node(float x, float y, std::string name) {

@@ -1,9 +1,6 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <vector>
-#include <string>
-
 class Node
 {
   public:
